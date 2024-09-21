@@ -18,20 +18,9 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "network" {
-  backend   = "s3"
-  workspace = terraform.workspace
-
-  config = {
-    bucket = "multiregion-lab"
-    key    = "aws-multiregion-lab/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
-
 # Providers
 provider "aws" {
-  region = local.region
+  region = var.region
 }
 
 provider "aws" {

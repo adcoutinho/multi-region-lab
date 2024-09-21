@@ -1,0 +1,54 @@
+# VPC Network config
+network:
+  create_vpc: true
+  vpc_name: "lab-use1"
+  vpc_cidr: 10.24.0.0/18
+  region: "us-east-1"
+  vpc_tags:
+
+# Eks config
+cluster:
+  cluster_name: "cluster-eks-lab-use1"
+  cluster_version: 1.30
+  instance_capacity_type: SPOT    # Only for initial nodes
+  desired_nodes: 2                # Only for initial nodes
+  
+  # EKS addons
+  eks_managed_addons:
+    vpc-cni:
+    coredns:
+    kube-proxy:
+    ebs-csi-driver:
+
+addons: 
+  # Cilium config
+  cilium: 
+    enable: true
+  
+  # Karpenter config
+  karpenter:
+    enable: true
+  
+  # ArgoCD config
+  argocd:
+    enable: true
+   
+  # Vault config
+  vault:
+    enable: true
+
+# Identity config
+identity:
+  roles:
+    argo:
+      irsa: false
+      custom_policy:
+       - assume_role              # List
+      managed_policy_arns:        # List
+
+# Default Tags
+default_tags:
+  env: lab
+  region: us-east-1
+  terraform: true
+  author: adcoutinho
