@@ -17,5 +17,6 @@ terraform {
 
 locals {
   context_yaml = fileset("${path.module}/environments", "*/${terraform.workspace}.yaml")
+  config = { for file in fileset("${path.module}/environments", "*/${terraform.workspace}.yaml") : terraform.workspace => "./environments/${file}" }
 }
 
